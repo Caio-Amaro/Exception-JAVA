@@ -42,24 +42,18 @@ public class program {
             
             System.out.print(" Data de Saída - data dd/mm/aaaa : ");
             saida = dts.parse(sc.next());
+     
+            String erro = reserva.updateDates(entra, saida);
             
-            Date agora = new Date();
+            if (erro != null){
             
-            if (entra.before(agora) || saida.before(agora))
-            {
-                System.out.println("ERRO!!! A data não pode ser anterior ao presente");
-            
+                 System.out.println("Erro na reserva : " + erro);
+            }
+            else 
+            { 
+                System.out.println("Reserva : " + reserva); 
             }
             
-            else if (!saida.after(entra)) {
-        
-            System.out.println("ERRO!!! A data de entrada deve ser anterior a de saída");
-        
-            }
-            else {
-            reserva.updateDates(entra, saida);
-            System.out.println("Reserva : " + reserva);
-            }
         }
     }
     

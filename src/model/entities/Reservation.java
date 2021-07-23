@@ -47,12 +47,29 @@ public Reservation(Integer roomNamber, Date checkIn, Date checkOut)
     }
     
     
-    public void updateDates(Date checkIn, Date checkOut)
+    public String updateDates(Date entra, Date saida)
     {
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
+        Date agora = new Date();
+            
+        if (entra.before(agora) || saida.before(agora))
+            {
+                return "ERRO!!! A data não pode ser anterior ao presente";
+            
+            }
+        if (!saida.after(entra)) {
+        
+                return "ERRO!!! A data de entrada deve ser anterior a de saída";
+        
+        }
+        
+        this.checkIn = entra;
+        this.checkOut = saida;
+        
+        return null;
     }
 
+    
+    
     @Override
     public String toString ()
     {
