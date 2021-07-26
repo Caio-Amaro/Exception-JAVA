@@ -3,6 +3,7 @@ package model.entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import model.execptions.DomainException;
 
 public class Reservation {
     
@@ -14,8 +15,13 @@ public class Reservation {
     
 public Reservation(){}
 
-public Reservation(Integer roomNamber, Date checkIn, Date checkOut)
+public Reservation(Integer roomNamber, Date checkIn, Date checkOut) throws DomainException
 {
+    if (!checkIn.after(checkOut)) {
+        
+               throw new DomainException ("ERRO!!! A data de entrada deve ser anterior a de saída");
+        
+        }
     this.roomNamber = roomNamber;
     this.checkIn = checkIn;
     this.checkOut = checkOut;
@@ -47,25 +53,25 @@ public Reservation(Integer roomNamber, Date checkIn, Date checkOut)
     }
     
     
-    public String updateDates(Date entra, Date saida)
+    public void updateDates(Date entra, Date saida) throws DomainException
     {
         Date agora = new Date();
             
         if (entra.before(agora) || saida.before(agora))
             {
-                return "ERRO!!! A data não pode ser anterior ao presente";
+                throw new DomainException ("ERRO!!! A data não pode ser anterior ao presente");
             
             }
         if (!saida.after(entra)) {
         
-                return "ERRO!!! A data de entrada deve ser anterior a de saída";
+               throw new DomainException ("ERRO!!! A data de entrada deve ser anterior a de saída");
         
         }
         
         this.checkIn = entra;
         this.checkOut = saida;
         
-        return null;
+        //return null;
     }
 
     
